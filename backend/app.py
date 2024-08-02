@@ -27,7 +27,7 @@ def listRespo():
             "Accept": "application/vnd.github.v3+json"
         }
 
-        res = requests.get(url, headers=headers)
+        res = requests.get(url, headers=headers, timeout=60)
 
         if res.status_code == 200:
             result = res.json()
@@ -63,7 +63,7 @@ def repofiles():
             "Authorization": f"token {token}",
             "Accept": "application/vnd.github.v3+json"
         }
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=60)
         if response.status_code == 200:
             contents = response.json()
 
@@ -103,7 +103,7 @@ def repofiles():
         }
 
         repocode = requests.get(
-            f'https://raw.githubusercontent.com/{username}/{repo}/main/{repopath}', headers=headers)
+            f'https://raw.githubusercontent.com/{username}/{repo}/main/{repopath}', headers=headers, timeout=60)
         repocode = repocode.text
         filedict['path'] = repopath
         filedict["code"] = repocode
