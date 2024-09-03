@@ -3,3 +3,4 @@ requests
 beautifulsoup4
 openai
 flask-cors
+security==1.3.1

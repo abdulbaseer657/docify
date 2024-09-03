@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify
 import openai
-import requests
 from flask_cors import CORS
 import os
+from security import safe_requests
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 app = Flask(__name__)
 CORS(app)
@@ -27,7 +28,7 @@ def listRespo():
             "Accept": "application/vnd.github.v3+json"
         }
 
-        res = requests.get(url, headers=headers)
+        res = safe_requests.get(url, headers=headers)
 
         if res.status_code == 200:
             result = res.json()
@@ -63,7 +64,7 @@ def repofiles():
             "Authorization": f"token {token}",
             "Accept": "application/vnd.github.v3+json"
         }
-        response = requests.get(url, headers=headers)
+        response = safe_requests.get(url, headers=headers)
         if response.status_code == 200:
             contents = response.json()
 
@@ -102,7 +103,7 @@ def repofiles():
             "Accept": "application/vnd.github.v3+json"
         }
 
-        repocode = requests.get(
+        repocode = safe_requests.get(
             f'https://raw.githubusercontent.com/{username}/{repo}/main/{repopath}', headers=headers)
         repocode = repocode.text
         filedict['path'] = repopath
